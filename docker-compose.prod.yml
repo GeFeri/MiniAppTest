@@ -32,11 +32,12 @@ services:
     build:
       context: ./frontend/main
       dockerfile: Dockerfile
+      target: builder        # 👈 указываем явно stage с Node
     container_name: miniapp_frontend_builder
-    command: [ "npm", "run", "build" ]
+    command: ["npm", "run", "build"]
     volumes:
-      - frontend_build:/frontend/main/dist
-    working_dir: /frontend/main
+      - frontend_build:/app/dist   # 👈 /app, а не /frontend/main
+    working_dir: /app
     restart: "no"
 
   nginx:
