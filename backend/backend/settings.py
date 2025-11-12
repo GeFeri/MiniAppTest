@@ -141,7 +141,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://www.gladiator-fest.ru",
 ]
 
-SECURE_SSL_REDIRECT = True
+
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
