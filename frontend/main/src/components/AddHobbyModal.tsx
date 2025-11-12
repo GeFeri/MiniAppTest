@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getTypeHobbies, createHobby, addUserHobby } from "../api/hobbiesApi";
 import type { TypeHobby } from "../api/types";
-import EmojiPicker from "emoji-picker-react";
+import EmojiPicker, {EmojiStyle} from "emoji-picker-react";
 import { HexColorPicker } from "react-colorful";
 
 interface AddHobbyModalProps {
@@ -100,7 +100,7 @@ export const AddHobbyModal = ({ onClose, onCreated }: AddHobbyModalProps) => {
                 searchDisabled
                 skinTonesDisabled
                 previewConfig={{showPreview: false}}
-                emojiStyle="EmojiStyle.APPLE"
+                emojiStyle={EmojiStyle.APPLE}
             />
           </div>
           <p className="text-center mt-2 text-2xl">{emoji}</p>
