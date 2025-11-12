@@ -42,7 +42,7 @@ router.register(r"type-hobbies", TypeHobbyViewSet, basename="type-hobbies")
 
 urlpatterns = [
     path('api/', include(router.urls)),
-    path('admin/', admin.site.urls),
+    path('api/admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:
