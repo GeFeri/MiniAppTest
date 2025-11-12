@@ -59,12 +59,10 @@ services:
 
   bot:
     build:
-      context: ./bot        # 👈 контекст сборки — только папка bot
+      context: ./bot
       dockerfile: Dockerfile
     container_name: miniapp_bot
     env_file: .env
-    volumes:
-      - ./bot/data:/bot/data  # 👈 если хочешь хранить файлы — монтируй только data/
     depends_on:
       - backend
     restart: always
