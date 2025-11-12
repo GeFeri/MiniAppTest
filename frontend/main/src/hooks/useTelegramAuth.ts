@@ -18,7 +18,7 @@ export const useTelegramAuth = () => {
     const checkAuth = async () => {
       try {
         // 1. Проверяем CloudStorage
-        const flag = await cloudStorage.get("isAuthorized");
+        const flag = await cloudStorage.getItem("isAuthorized");
         if (flag === "true") {
           setAuthorized(true);
           return;
@@ -37,9 +37,9 @@ export const useTelegramAuth = () => {
 
         if (res.status === 200 && res.data?.user) {
           // 4. Сохраняем данные в CloudStorage
-          await cloudStorage.set("isAuthorized", "true");
-          await cloudStorage.set("tg_id", String(res.data.user.tg_id));
-          await cloudStorage.set("is_manager", res.data.is_manager ? "1" : "0");
+          await cloudStorage.setItem("isAuthorized", "true");
+          await cloudStorage.setItem("tg_id", String(res.data.user.tg_id));
+          await cloudStorage.setItem("is_manager", res.data.is_manager ? "1" : "0");
 
           setAuthorized(true);
         } else {

@@ -100,7 +100,7 @@ export const AddHobbyModal = ({ onClose, onCreated }: AddHobbyModalProps) => {
                 searchDisabled
                 skinTonesDisabled
                 previewConfig={{showPreview: false}}
-                emojiStyle="apple"
+                emojiStyle="EmojiStyle.APPLE"
             />
           </div>
           <p className="text-center mt-2 text-2xl">{emoji}</p>

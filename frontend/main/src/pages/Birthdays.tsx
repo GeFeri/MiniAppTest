@@ -5,10 +5,11 @@ import { useEffect, useState } from "react"
 import { getBirthdays } from "../api/birthdaysApi"
 import { BirthdayCard } from "../components/BirthdayCard"
 import { PageContainer } from "../components/PageContainer.tsx"
-import { Cake } from "lucide-react" // Assuming Cake is imported from here
+import { Cake } from "lucide-react"
+import type {BirthdayUser} from "../api/types.ts"; // Assuming Cake is imported from here
 
 export const Birthdays = () => {
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState<BirthdayUser[]>([])
 
   useEffect(() => {
     getBirthdays().then(setUsers)

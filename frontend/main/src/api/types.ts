@@ -54,6 +54,7 @@ export interface EventItem {
   date: string; // ISO
   created_by: string; // username (по сериализатору)
   created_at: string; // ISO
+  image?: string | null;
 }
 
 export interface InviteKey {
