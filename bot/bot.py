@@ -23,9 +23,9 @@ from services.store import SubscriberStore
 # НАСТРОЙКИ
 # -------------------------------
 logging.basicConfig(level=logging.INFO)
-BOT_TOKEN = os.getenv("BOT_TOKEN")
+BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 MANAGER_IDS = set(int(x) for x in os.getenv("MANAGER_IDS", "").split(",") if x.strip().isdigit())
-WEBAPP_URL = os.getenv("WEBAPP_URL", "https://yourdomain.ru")
+WEBAPP_URL = os.getenv("WEBAPP_URL", "https://gladiator-fest.ru")
 store = SubscriberStore()
 
 # -------------------------------
