@@ -13,6 +13,7 @@ services:
       - pgdata:/var/lib/postgresql/data
     expose:
       - 5432
+
   backend:
     build:
       context: .
@@ -26,26 +27,17 @@ services:
       - 8000
     restart: always
 
-  frontend:
+  # 🧩 Контейнер для сборки фронта
+  frontend-builder:
     build:
-      context: .
-      dockerfile: frontend/main/Dockerfile
-    container_name: miniapp_frontend
-    depends_on:
-      - backend
-    restart: always
-
-  bot:
-    build:
-      context: .
-      dockerfile: bot/Dockerfile
-    container_name: miniapp_bot
-    env_file: .env
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: miniapp_frontend_builder
+    command: ["npm", "run", "build"]
     volumes:
-      - ./bot/data:/bot
-    depends_on:
-      - backend
-    restart: always
+      - frontend_build:/frontend/dist
+    working_dir: /frontend
+    restart: "no"
 
   nginx:
     image: nginx:1.25-alpine
@@ -59,7 +51,19 @@ services:
       - frontend_build:/usr/share/nginx/html
     depends_on:
       - backend
-      - frontend
+      - frontend-builder
+    restart: always
+
+  bot:
+    build:
+      context: .
+      dockerfile: bot/Dockerfile
+    container_name: miniapp_bot
+    env_file: .env
+    volumes:
+      - ./bot/data:/bot
+    depends_on:
+      - backend
     restart: always
 
 volumes:
