@@ -30,13 +30,13 @@ services:
   # 🧩 Контейнер для сборки фронта
   frontend-builder:
     build:
-      context: ./frontend
+      context: ./frontend/main
       dockerfile: Dockerfile
     container_name: miniapp_frontend_builder
-    command: ["npm", "run", "build"]
+    command: [ "npm", "run", "build" ]
     volumes:
-      - frontend_build:/frontend/dist
-    working_dir: /frontend
+      - frontend_build:/frontend/main/dist
+    working_dir: /frontend/main
     restart: "no"
 
   nginx:
