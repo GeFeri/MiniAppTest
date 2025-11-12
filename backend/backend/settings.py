@@ -136,6 +136,12 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "https://t.me", "https://web.telegram.org", "https://gladiator-fest.ru"
 ]
+CSRF_TRUSTED_ORIGINS = [
+    "https://gladiator-fest.ru",
+    "https://www.gladiator-fest.ru",
+]
 
-
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
