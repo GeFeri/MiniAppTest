@@ -1,4 +1,5 @@
 # backend/users/views/invite_view.py
+from django.utils.encoding import force_str
 from rest_framework import viewsets, permissions, decorators, response, status
 from users.serializers import InviteKeySerializer
 from users.services.invite_service import InviteService
@@ -36,12 +37,14 @@ class InviteViewSet(viewsets.ViewSet):
     @decorators.action(detail=False, methods=['post'], permission_classes=[permissions.AllowAny])
     def activate(self, request):
         try:
+            print("ACTIVATE DATA:", request.data)  # 👈 лог входящих данных
             user = InviteService.activate_invite(
                 telegram_id=request.data.get('telegram_id'),
                 input_key=request.data.get('invite_key'),
                 telegram_username=request.data.get('telegram_username')
             )
         except Exception as e:
-            return response.Response({'error': str(e)}, status=400)
-        return response.Response({'success': True, 'user_id': user.id, 'username': user.username}, status=201)
+            print("ACTIVATE ERROR:", repr(e))  # 👈 лог ошибки
+            return response.Response({'error': force_str(e)}, status=400)
+        return response.Response({'user_id': user.id, 'username': user.username}, status=201)
 
