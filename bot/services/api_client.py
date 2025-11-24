@@ -34,11 +34,15 @@ async def create_invite(
 
 async def activate_invite(tg_id: int, key: str) -> Dict[str, Any]:
     url = f"{API_BASE}/invites/activate/"
-    payload = {"tg_id": tg_id, "key": key}
+    payload = {
+        "telegram_id": tg_id,
+        "invite_key": key
+    }
     async with httpx.AsyncClient(timeout=API_TIMEOUT) as client:
         r = await client.post(url, json=payload, headers=_headers())
         r.raise_for_status()
         return r.json()
+
 
 async def get_upcoming_events(days: int = 7) -> List[Dict[str, Any]]:
     url = f"{API_BASE}/events/upcoming"

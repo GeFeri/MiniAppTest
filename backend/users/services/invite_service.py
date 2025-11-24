@@ -21,35 +21,24 @@ class InviteService:
         )
 
     @staticmethod
-    def activate_invite(telegram_id: int, input_key: str, telegram_username: str = None):
+    def activate_invite(telegram_id: int, input_key: str):
         existing_user = User.objects.filter(tg_id=telegram_id).first()
         if existing_user:
             return existing_user
+
         try:
             invite = InviteKey.objects.get(key=input_key, used=False)
         except InviteKey.DoesNotExist:
             raise ValidationError("Неверный или использованный ключ")
 
-        # проверка срока
         if invite.expires_at and invite.expires_at < timezone.now():
             raise ValidationError("Ключ просрочен")
 
-        # ✅ проверка Telegram username
-        if invite.telegram_username and telegram_username:
-            if invite.telegram_username.lower() != telegram_username.lower():
-                raise ValidationError("Этот ключ не принадлежит вашему аккаунту Telegram")
-
-        # ✅ дополнительная защита: если в инвайте задано имя/фамилия — сверим
-        # (не обязательно, но может пригодиться)
-        # if invite.first_name and invite.first_name.lower() != first_name.lower():
-        #     raise ValidationError("Имя не совпадает с приглашением")
-
-        # регистрация
         user = User.objects.create(
             username=f"user_{telegram_id}",
             first_name=invite.first_name,
             last_name=invite.last_name,
-            tg_id=telegram_id
+            tg_id=telegram_id,
         )
 
         invite.used = True

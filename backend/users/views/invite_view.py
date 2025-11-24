@@ -36,15 +36,28 @@ class InviteViewSet(viewsets.ViewSet):
 
     @decorators.action(detail=False, methods=['post'], permission_classes=[permissions.AllowAny])
     def activate(self, request):
+        data = request.data
+
+        # Поддержка старых и новых названий
+        telegram_id = data.get("telegram_id") or data.get("tg_id")
+        input_key = data.get("invite_key") or data.get("key")
+
+        if not telegram_id or not input_key:
+            return response.Response(
+                {"error": "telegram_id и invite_key обязательны"},
+                status=400,
+            )
+
         try:
-            print("ACTIVATE DATA:", request.data)  # 👈 лог входящих данных
             user = InviteService.activate_invite(
-                telegram_id=request.data.get('telegram_id'),
-                input_key=request.data.get('invite_key'),
-                telegram_username=request.data.get('telegram_username')
+                telegram_id=int(telegram_id),
+                input_key=str(input_key),
             )
         except Exception as e:
-            print("ACTIVATE ERROR:", repr(e))  # 👈 лог ошибки
-            return response.Response({'error': force_str(e)}, status=400)
-        return response.Response({'user_id': user.id, 'username': user.username}, status=201)
+            return response.Response({"error": force_str(e)}, status=400)
+
+        return response.Response(
+            {"user_id": user.id, "username": user.username},
+            status=201,
+        )
 
