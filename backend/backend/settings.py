@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-i_=jpb^%445ppc2$hm46527&v8rn!drj_dhtlo5n%6be4!qmw&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["gladiator-fest.ru", "www.gladiator-fest.ru", "localhost", "127.0.0.1", "backend"]
+ALLOWED_HOSTS = ["gladiator-fest.ru", "www.gladiator-fest.ru", "localhost", "127.0.0.1", "backend", "147.45.183.2"]
 
 
 
